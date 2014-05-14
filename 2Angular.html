@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html ng-app="directiveDemo">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>
+
+    </title>
+
+    <script src="bower_components/angular/angular.js"></script>
+    <script>
+        angular.module('directiveDemo',[])
+                .controller('baseCtrl', function($scope){
+                    $scope.county = {
+                        name: 'Marina',
+                        state: 'California'
+                    };
+                })
+                .directive('gllcounty', function(){
+                    return {
+                        restrict: 'E',
+                        template: 'County Name: {{county.name}} County Address: {{county.state}}'
+                    };
+                });
+    </script>
+</head>
+<body>
+<div ng-controller="baseCtrl">
+    <gllcounty></gllcounty>
+    <div gllcounty></div>
+    <div class="gllcounty"></div>
+</div>
+</body>
+</html>

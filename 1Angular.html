@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html ng-app="stockApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        input{
+            display: block;
+            font: 100 1em Avenir;
+            border: 1px solid gray;
+            background-color: transparent;
+            margin: 0.25em;
+            padding: 0.25em 0.75em;
+        }
+    </style>
+    <script src="bower_components/angular/angular.js"></script>
+    <script>
+        var stockApp = angular.module('stockApp', []);
+        stockApp.controller('StockCtrl', function($scope){
+            $scope.numberOfStocks = 0;
+            $scope.$watch('numberOfStocks', function(){
+                $scope.stockNames = [];
+                var i = 0;
+                while(i++ < $scope.numberOfStocks){
+                    $scope.stockNames.push(i);
+                }
+            });
+
+            $scope.stockNames = [];
+            $scope.showStockInput = function(e){
+                $scope.stockNames = [];
+                var i = 0;
+                while(i++ < $scope.numberOfStocks){
+                    $scope.stockNames.push(i);
+                }
+
+            };
+        });
+    </script>
+</head>
+<body>
+<!--ng-keyup="showStockInput($event)"-->
+<div ng-controller="StockCtrl">
+    <input type="text" ng-model="numberOfStocks" />
+    <input type="text" ng-repeat="stockName in stockNames" placeholder="Enter stock name ... "/>
+</div>
+
+</body>
+</html>
