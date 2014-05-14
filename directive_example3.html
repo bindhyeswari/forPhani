@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="timeDirective">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="bower_components/angular/angular.js"></script>
+    <script>
+        angular.module('timeDirective', []).controller('TimeCtrl', ['$scope', function($scope){
+            $scope.format = 'M/d/yy h:mm:ss a';
+        }]).directive('myTime', ['$interval', 'dateFilter', function($interval, dateFilter){
+
+            function link(scope, element, attrs){
+                var format, timeoutID;
+
+                function updateTime(){
+                    element.text(dateFilter(new Date(), format));
+                }
+
+                scope.$watch(attrs.myTime, function(value){
+                    format = value;
+                    updateTime();
+                });
+
+                element.on('$destroy', function(){
+                    $interval.cancel(timeoutID);
+                });
+
+                timeoutID = $interval(function(){
+                    updateTime();
+                }, 1000);
+            }
+
+            return {
+                link: link
+            };
+
+        }]);
+    </script>
+</head>
+<body>
+    <div ng-controller="TimeCtrl">
+        <input type="text" ng-model="format"/>
+        <span my-time="format"></span>
+    </div>
+</body>
+</html>

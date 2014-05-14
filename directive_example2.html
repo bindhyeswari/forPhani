@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html ng-app="docsIsolationExample">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="bower_components/angular/angular.js"></script>
+    <script>
+        angular.module('docsIsolationExample', [])
+                .controller('Controller', ['$scope', function($scope) {
+                    $scope.mishra = { name: 'mishra', address: 'San Jose' };
+                    $scope.bhanu = { name: 'bhanu', address: 'Seattle' };
+                }])
+                .directive('myCustomer', function() {
+                    return {
+                        restrict: 'E',
+                        scope: {
+                            customerInfo: '=info'
+                        },
+                        templateUrl: 'directive-template.html'
+                    };
+                });
+    </script>
+</head>
+<body>
+    <div ng-controller="Controller">
+        <my-customer info="mishra"></my-customer>
+        <my-customer info="bhanu"></my-customer>
+    </div>
+</body>
+</html>

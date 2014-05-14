@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        var i = 0;
+        var intervalid = $interval(function(){
+
+            console.log((new Date()).toString());
+            if (i++ > 3) {
+                clearInterval(intervalid);
+            }
+        }, 1000);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

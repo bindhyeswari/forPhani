@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html ng-app="timeApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="bower_components/angular/angular.js"></script>
+    <script>
+        var timeApp = angular.module('timeApp', []);
+
+        timeApp.controller('TimeCtrl', function($scope){
+            $scope.format = 'dd/MM/yyyy hh:mm:ss';
+        });
+
+        timeApp.directive('customTimer', function($interval, dateFilter){
+            function link(scope, element, attrs){
+                var format, timerID;
+                function updateTime(){
+                    // check this documentation https://docs.angularjs.org/api/ng/function/angular.element
+                    element.text(dateFilter(new Date(), format));
+                }
+                scope.$watch(attrs.customTimer, function(value){
+                    format = value;
+                    updateTime();
+                });
+                element.on('$destroy', function(){
+                    $interval.cancel(timerID);
+                });
+                timerID = $interval(function(){
+                    updateTime();
+                }, 1000);
+            }
+            return {
+                link: link,
+                restrict: 'A'
+            };
+        });
+    </script>
+</head>
+<body>
+    <div ng-controller="TimeCtrl">
+        <input type="text" ng-model="format"/>
+        <div custom-timer="format"></div>
+    </div>
+</body>
+</html>

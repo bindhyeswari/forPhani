@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html ng-app="ngApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="bower_components/angular/angular.js"></script>
+    <script>
+        angular.module('ngApp', [])
+                .controller('MyCtrl', ['$scope', function($scope){
+                    $scope.customer = {
+                        name: 'Janmejay',
+                        address: 'Belmont'
+                    };
+                }])
+                .controller('CCCtrl', ['$scope', function($scope){
+                    $scope.customer = {
+                        name: 'Rohit',
+                        address: 'Cupertino'
+                    };
+                }])
+                .directive('myCustomer', function(){
+                    return  {
+                        template: 'Name: {{customer.name}} Address: {{customer.address}}',
+                        restrict: 'AEC'
+                    }
+                });
+    </script>
+</head>
+<body>
+     <div ng-controller="MyCtrl">
+         <my-customer></my-customer>
+     </div>
+     <div ng-controller="CCCtrl">
+         <my-customer></my-customer>
+     </div>
+</body>
+</html>
